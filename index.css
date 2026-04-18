@@ -1,0 +1,204 @@
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f5f5f5;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2874f0;
+  padding: 15px;
+  color: white;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+#search {
+  width: 40%;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+
+.cart-btn {
+  background: rgb(7, 169, 50);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+.product button {
+  background-color: orange;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.product button:hover {
+  background-color: darkorange;
+}
+/* Banner */
+.banner {
+  text-align: center;
+  padding: 40px;
+  background: linear-gradient(to right, #2874f0, #00c6ff);
+  color: white;
+}
+
+/* Products */
+.products {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px;
+  flex-wrap: wrap; /* IMPORTANT */
+}
+
+.product {
+  background: white;
+  padding: 20px;
+  width: 200px;
+  text-align: center;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+.product img:hover {
+  transform: scale(1.1);
+  transition: 0.3s;
+}
+.product:hover {
+  transform: scale(1.05);
+}
+
+button {
+  background: orange;
+  border: none;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: darkorange;
+}
+
+/* Cart */
+.cart-box {
+  position: fixed;
+  right: 0;
+  top: 70px;
+  width: 250px;
+  background: white;
+  padding: 15px;
+  border-left: 2px solid #ccc;
+  display: none;
+}
+
+.cart-box ul {
+  list-style: none;
+  padding: 0;
+}
+
+.cart-box li {
+  margin: 10px 0;
+}
+
+.product img {
+  width: 100%;
+  border-radius: 10px;
+}
+/* 🔐 Login Popup */
+.login-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-content {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  width: 300px;
+  text-align: center;
+  animation: zoomIn 0.3s ease;
+}
+
+.login-content input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.login-content button {
+  width: 100%;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* ✨ Animation */
+@keyframes zoomIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* 💎 Premium Hover */
+.product {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.product:hover {
+  transform: translateY(-10px);
+}
+
+/* 🌟 Glass Effect Navbar */
+.navbar {
+  backdrop-filter: blur(10px);
+}
+.login-btn {
+  background-color: #069124; /* Flipkart blue */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #1c5ed6;
+  transform: scale(1.05);
+}
+
+.login-btn:active {
+  transform: scale(0.95);
+}
+.cart-box button {
+  background: red;
+  border: none;
+  color: white;
+  padding: 5px 8px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}

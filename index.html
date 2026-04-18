@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Anas Market</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+
+  <header class="navbar">
+    
+  <div class="logo">Anas Market</div>
+  <input type="text" id="search" placeholder="Search for products...">
+  
+  <button class="login-btn" onclick="openLogin()">Login</button>
+
+  <button class="cart-btn" onclick="toggleCart()">
+    Cart (<span id="cart-count">0</span>)
+  </button>
+</header>
+    
+ 
+<section class="banner">
+  <h1>Welcome to Anas Market</h1>
+  <p>Best Deals, Best Prices 🔥</p>
+</section>
+
+<section class="products" id="product-list"></section>
+
+  
+
+<!-- 🛒 Cart Box -->
+<div id="cart-box" class="cart-box">
+  <h2>Your Cart</h2>
+  <ul id="cart-items"></ul>
+  <h3>Total: ₹<span id="total-price">0</span></h3>
+</div>
+
+<!-- 🔐 Login Box -->
+<div id="login-box" class="login-box">
+  <div class="login-content">
+    <span class="close" onclick="closeLogin()">×</span>
+    <h2>Login</h2>
+    <input type="text" placeholder="Username">
+    <input type="password" placeholder="Password">
+    <button>Login</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+const token = localStorage.getItem("token");
+
+if (!token) {
+  alert("Please login first ❌");
+  window.location.href = "login.html";
+}
+function logout() {
+  localStorage.removeItem("token");
+  window.location.href = "login.html";
+}
+</script>
+</body>
+</html>
