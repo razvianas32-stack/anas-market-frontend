@@ -17,14 +17,27 @@ function login() {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
 
-  fetch("https://anas-market.onrender.com/api/auth/login", {
+  if (!email || !password) {
+    alert("Please fill all fields ❌");
+    return;
+  }
+
+  fetch("https://anas-market-backend.onrender.com/api/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({ email, password })
   })
-  .then(res => res.json())
+  .then(async (res) => {
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || "Login failed ❌");
+    }
+
+    return data;
+  })
   .then(data => {
     localStorage.setItem("token", data.token);
 
@@ -32,7 +45,7 @@ function login() {
     window.location.href = "index.html";
   })
   .catch(err => {
-    alert("Error: " + err.message);
+    alert(err.message);
   });
 }
 </script>
