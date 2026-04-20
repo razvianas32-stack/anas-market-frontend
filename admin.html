@@ -13,7 +13,7 @@ document.getElementById("form").addEventListener("submit", async (e) => {
   const price = document.getElementById("price").value;
   const image = document.getElementById("image").value;
 
-  await fetch("http://localhost:5000/products", {
+  await fetch("https://anas-market.onrender.com/api/products", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

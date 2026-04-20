@@ -44,7 +44,7 @@ function toggleCart() {
 // 📦 LOAD PRODUCTS FROM BACKEND
 async function loadProducts() {
   try {
-    const res = await fetch("http://localhost:5000/products");
+    const res = await fetch("https://anas-market.onrender.com/api/products");
 
     if (!res.ok) {
       throw new Error("Server error");
