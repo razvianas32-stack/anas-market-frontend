@@ -28,7 +28,15 @@ async function loadProducts() {
         </div>
       `;
     });
+function toggleCart() {
+  let cartBox = document.getElementById("cart-box");
 
+  if (cartBox.style.display === "block") {
+    cartBox.style.display = "none";
+  } else {
+    cartBox.style.display = "block";
+  }
+}
   } catch (err) {
     console.error("Error:", err);
     document.getElementById("product-list").innerHTML =
