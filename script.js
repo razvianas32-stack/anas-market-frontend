@@ -1,7 +1,15 @@
-// Cart array — stores all added items
-let cart = [];
+// ─────────────── CART SETUP ───────────────
 
-// ── Load products from backend ──
+// Load cart from localStorage
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+// Save cart helper
+function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+// ─────────────── LOAD PRODUCTS ───────────────
+
 async function loadProducts() {
   try {
     const res = await fetch("https://anas-market-backend.onrender.com/api/products");
@@ -23,7 +31,7 @@ async function loadProducts() {
           <img src="${item.image}" width="150">
           <h3>${item.name}</h3>
           <p>₹${item.price}</p>
-          <button onclick="addToCart('${item.name}', ${item.price})">
+          <button onclick='addToCart(${JSON.stringify(item)})'>
             Add to Cart 🛒
           </button>
         </div>
@@ -31,27 +39,30 @@ async function loadProducts() {
     });
 
   } catch (err) {
-    console.error("Error:", err);
+    console.error(err);
     document.getElementById("product-list").innerHTML =
       "<h2>Backend connect nahi ho raha ❌</h2>";
   }
 }
 
-// ── Add item to cart ──
-function addToCart(name, price) {
-  const existing = cart.find(item => item.name === name);
+// ─────────────── ADD TO CART ───────────────
+
+function addToCart(product) {
+  const existing = cart.find(item => item._id === product._id);
 
   if (existing) {
     existing.qty += 1;
   } else {
-    cart.push({ name, price, qty: 1 });
+    cart.push({ ...product, qty: 1 });
   }
 
+  saveCart();
   renderCart();
   openCart();
 }
 
-// ── Render cart items in the sidebar ──
+// ─────────────── RENDER CART ───────────────
+
 function renderCart() {
   const cartItems = document.getElementById("cart-items");
   const totalPrice = document.getElementById("total-price");
@@ -60,88 +71,72 @@ function renderCart() {
   cartItems.innerHTML = "";
 
   if (cart.length === 0) {
-    cartItems.innerHTML = "<li style='padding:1rem 0;color:#888'>Your cart is empty</li>";
+    cartItems.innerHTML = "<li style='padding:1rem;color:#888'>Your cart is empty</li>";
     totalPrice.textContent = "0";
-    if (cartCount) cartCount.textContent = "0";
+    cartCount.textContent = "0";
     return;
   }
 
   let total = 0;
+  let count = 0;
 
   cart.forEach((item, index) => {
     total += item.price * item.qty;
+    count += item.qty;
+
     cartItems.innerHTML += `
       <li class="cart-item">
-        <div class="cart-item-info">
-          <span class="cart-item-name">${item.name}</span>
-          <span class="cart-item-price">₹${item.price}</span>
+        <div>
+          <strong>${item.name}</strong> - ₹${item.price}
         </div>
-        <div class="cart-item-controls">
+        <div>
           <button onclick="changeQty(${index}, -1)">−</button>
-          <span>${item.qty}</span>
-          <button onclick="changeQty(${index}, +1)">+</button>
-          <button class="remove-btn" onclick="removeFromCart(${index})">🗑</button>
+          ${item.qty}
+          <button onclick="changeQty(${index}, 1)">+</button>
+          <button onclick="removeFromCart(${index})">🗑</button>
         </div>
       </li>
     `;
   });
 
   totalPrice.textContent = total;
-  if (cartCount) cartCount.textContent = cart.reduce((sum, i) => sum + i.qty, 0);
+  cartCount.textContent = count;
 }
 
-// ── Change item quantity ──
+// ─────────────── UPDATE QTY ───────────────
+
 function changeQty(index, delta) {
   cart[index].qty += delta;
+
   if (cart[index].qty <= 0) {
     cart.splice(index, 1);
   }
+
+  saveCart();
   renderCart();
 }
 
-// ── Remove item from cart ──
+// ─────────────── REMOVE ITEM ───────────────
+
 function removeFromCart(index) {
   cart.splice(index, 1);
+  saveCart();
   renderCart();
 }
 
-// ── Open cart ──
+// ─────────────── CART UI ───────────────
+
 function openCart() {
   document.getElementById("cart-box").classList.add("open");
 }
 
-// ── Toggle cart open/close ──
 function toggleCart() {
   document.getElementById("cart-box").classList.toggle("open");
 }
 
-// ── Close login box ──
-function closeLogin() {
-  document.getElementById("login-box").style.display = "none";
-}
+// ─────────────── INIT ───────────────
 
-// ── Login function ──
-function login() {
-  const email = document.getElementById("login-email").value;
-  const password = document.getElementById("login-password").value;
-
-  if (!email || !password) {
-    alert("Please enter email and password");
-    return;
-  }
-
-  // Replace this with your real API call when ready
-  // Example:
-  // const res = await fetch("https://anas-market-backend.onrender.com/api/login", {
-  //   method: "POST",
-  //   headers: { "Content-Type": "application/json" },
-  //   body: JSON.stringify({ email, password })
-  // });
-  // const data = await res.json();
-  // localStorage.setItem("token", data.token);
-
-  alert("Login clicked — connect your backend API here");
-}
-
-// ── Start ──
-loadProducts();
+window.onload = () => {
+  loadProducts();
+  renderCart();
+};
